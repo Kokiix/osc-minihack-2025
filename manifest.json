@@ -1,0 +1,17 @@
+{
+  "name": "All in One Canvas",
+  "version": "0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "103.0",
+  "content_scripts": [
+    {
+      "matches": ["*://ufl.instructure.com"],
+      "js": ["main.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self' 'wasm-unsafe-eval';"
+  }
+}
