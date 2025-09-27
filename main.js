@@ -36,12 +36,24 @@ async function main() {
                   .menu-label.is-active .icon {
                     transform: rotate(180deg);
                   }
+                  .floating-action-button {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                  }
                 </style>`;
 
             document.body.innerHTML = `
                 <section class="section py-4">
                     <div id="column-parent" class="columns has-text-centered"></div>
-                </section>`;
+                </section>
+                <button class="button is-primary is-rounded is-large floating-action-button" id="expand-collapse-all">
+                    <span class="icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </span>
+                    <span>Expand All</span>
+                </button>`;
 
             for (let courseName in data) {
                 let columnFrame = `
@@ -60,7 +72,10 @@ async function main() {
                                     <ul class="menu-list">`;
                     for (let assign_i in data[courseName][moduleName]) {
                         let assign = data[courseName][moduleName][assign_i];
-                        columnFrame += `<li><a href="${assign.html_url}" class="has-text-link">${assign.title}</a></li>`;
+                        if (assign.html_url) {
+                          columnFrame += `<li><a href="${assign.html_url}" class="has-text-link">${assign.title}</a></li>`;
+
+                        }
                     }
                     columnFrame += "</ul>";
                 }
@@ -73,6 +88,34 @@ async function main() {
                 label.addEventListener('click', () => {
                     label.classList.toggle('is-active');
                 });
+            });
+
+            const expandCollapseAllBtn = document.getElementById('expand-collapse-all');
+            expandCollapseAllBtn.addEventListener('click', () => {
+                const allLabels = document.querySelectorAll('.menu-label.is-clickable');
+                const isExpanded = expandCollapseAllBtn.classList.contains('is-expanded');
+
+                if (isExpanded) {
+                    allLabels.forEach(label => {
+                        label.classList.remove('is-active');
+                    });
+                    expandCollapseAllBtn.innerHTML = `
+                        <span class="icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </span>
+                        <span>Expand All</span>`;
+                    expandCollapseAllBtn.classList.remove('is-expanded');
+                } else {
+                    allLabels.forEach(label => {
+                        label.classList.add('is-active');
+                    });
+                    expandCollapseAllBtn.innerHTML = `
+                        <span class="icon">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                        </span>
+                        <span>Close All</span>`;
+                    expandCollapseAllBtn.classList.add('is-expanded');
+                }
             });
         });
 }
