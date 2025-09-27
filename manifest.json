@@ -5,8 +5,8 @@
   "minimum_chrome_version": "103.0",
   "content_scripts": [
     {
-      "matches": ["*://ufl.instructure.com"],
-      "js": ["main.js"],
+      "matches": ["*://ufl.instructure.com/"],
+      "js": ["axios.js", "main.js"],
       "run_at": "document_start",
       "world": "MAIN"
     }
