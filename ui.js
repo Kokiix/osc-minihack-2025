@@ -151,91 +151,36 @@ class CanvasDashboard {
   }
 
   async loadStudentData() {
-    // Mock API call - replace with actual Canvas API integration
-    try {
-      // This would be your actual Canvas API call
-      // const response = await fetch('/api/canvas/student-data');
-      // this.studentData = await response.json();
-      
-      // Mock data for demonstration
-      this.studentData = {
-        student: {
-          name: "John Doe",
-          id: "12345"
-        },
-        courses: [
-          {
-            id: 1,
-            name: "Computer Science 101",
-            modules: [
-              {
-                name: "Introduction to Programming",
-                assignments: [
-                  { title: "Hello World Assignment", dueDate: "2024-10-15", type: "assignment" },
-                  { title: "Variables Quiz", dueDate: "2024-10-12", type: "quiz" }
-                ]
-              },
-              {
-                name: "Data Structures",
-                assignments: [
-                  { title: "Array Implementation", dueDate: "2024-10-20", type: "assignment" },
-                  { title: "Linked Lists Project", dueDate: "2024-10-25", type: "project" }
-                ]
-              }
-            ]
-          },
-          {
-            id: 2,
-            name: "Mathematics 201",
-            modules: [
-              {
-                name: "Calculus Basics",
-                assignments: [
-                  { title: "Derivatives Homework", dueDate: "2024-10-18", type: "assignment" },
-                  { title: "Limits Quiz", dueDate: "2024-10-16", type: "quiz" }
-                ]
-              }
-            ]
-          },
-          {
-            id: 3,
-            name: "Physics 150",
-            modules: [
-              {
-                name: "Mechanics",
-                assignments: [
-                  { title: "Newton's Laws Lab", dueDate: "2024-10-22", type: "lab" },
-                  { title: "Force Calculations", dueDate: "2024-10-19", type: "assignment" }
-                ]
-              }
-            ]
-          },
-          {
-            id: 4,
-            name: "English Literature 300",
-            modules: [
-              {
-                name: "Modern Poetry",
-                assignments: [
-                  { title: "Poetry Analysis Essay", dueDate: "2024-10-28", type: "assignment" },
-                  { title: "Poem Recitation", dueDate: "2024-10-24", type: "project" }
-                ]
-              },
-              {
-                name: "Victorian Literature",
-                assignments: [
-                  { title: "Dickens Discussion Post", dueDate: "2024-10-21", type: "discussion" },
-                  { title: "Character Analysis", dueDate: "2024-10-26", type: "assignment" }
-                ]
-              }
-            ]
-          }
-        ]
-      };
-    } catch (error) {
-      console.error('Failed to load student data:', error);
-      this.studentData = { courses: [] };
-    }
+    let data = {};
+    let courseIDs = {};
+    await axios.get("/api/v1/courses")
+    .then(function (response) {
+        // Pair course name to course id in courseIDs
+        for (i in response.data) {
+            courseIDs[response.data[i].name] = response.data[i].id;
+            // Pair course name to object w course modules/assign
+            data[response.data[i].name] = {};
+        }
+        console.log("Get course IDs and names");
+        
+        // Use courseIDs to get modules/assignments
+        for (let courseName in courseIDs) {
+            axios.get(`/api/v1/courses/${courseIDs[courseName]}/modules?include[]=items`)
+                .then(function (response) {
+                    let moduleData = response.data;
+                    for (let module_i in moduleData) {
+                        // Under each course name,
+                        // pair each module name to an array w assignment objects
+                        data[courseName][moduleData[module_i].name] = []
+                        for (let assignment_i in moduleData[module_i].items) {
+                            data[courseName][moduleData[module_i].name][assignment_i] = moduleData[module_i].items[assignment_i]
+                        }
+                    }
+            })
+        }
+        console.log("Get modules");
+        console.log(data)
+    })
   }
 
   renderDashboard() {

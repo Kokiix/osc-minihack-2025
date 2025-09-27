@@ -9,11 +9,6 @@
       "js": ["axios.js", "main.js"],
       "run_at": "document_start",
       "world": "MAIN"
-    },
-    {
-      "matches": ["*://ufl.instructure.com/*"], 
-      "js": ["ui.js"],
-      "run_at": "document_start" 
     }
   ],
   "content_security_policy": {
