@@ -157,6 +157,8 @@ class CanvasDashboard {
         text-align: center;
         flex-shrink: 0;
       }
+
+
       
       .course-modules {
         flex: 1;
@@ -195,6 +197,16 @@ class CanvasDashboard {
         border-left: 3px solid #0021A5;
       }
       
+      .no-content-message {
+        padding: 15px;
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin: 15px;
+      }
+
       .assignment-card:hover {
         background: #e3f2fd;
         border-left-color: #FA4616;
@@ -322,42 +334,55 @@ class CanvasDashboard {
         return;
       }
 
-      // Load modules for each course
-      const coursePromises = courses.slice(0, 10).map(async (course) => {
+      // Load modules, grades, and assignments for each course
+      const coursePromises = courses.map(async (course) => {
         try {
-          const moduleResponse = await fetch(
-            `/api/v1/courses/${course.id}/modules?include[]=items&per_page=30`
-          );
+          const [moduleResponse, assignmentResponse] = await Promise.all([
+            fetch(`/api/v1/courses/${course.id}/modules?include[]=items&per_page=30`),
+            fetch(`/api/v1/courses/${course.id}/assignments?per_page=30`)
+          ]);
+
+
           
-          if (!moduleResponse.ok) {
-            console.warn(`Failed to load modules for ${course.name}`);
-            return null;
+          let processedModules = [];
+          let courseAssignments = [];
+          
+          if (moduleResponse.ok) {
+            const modules = await moduleResponse.json();
+            processedModules = modules.map(module => ({
+              name: module.name,
+              assignments: (module.items || [])
+                .filter(item => 
+                  item.type === 'Assignment' || 
+                  item.type === 'Quiz' || 
+                  item.type === 'Discussion'
+                )
+                .map(item => ({
+                  id: item.id,
+                  title: item.title || 'Untitled',
+                  url: item.html_url,
+                  type: item.type,
+                  dueDate: item.due_at
+                }))
+            })).filter(module => module.assignments.length > 0);
           }
-          
-          const modules = await moduleResponse.json();
-          
-          const processedModules = modules.map(module => ({
-            name: module.name,
-            assignments: (module.items || [])
-              .filter(item => 
-                item.type === 'Assignment' || 
-                item.type === 'Quiz' || 
-                item.type === 'Discussion'
-              )
-              .slice(0, 15)
-              .map(item => ({
-                id: item.id,
-                title: item.title || 'Untitled',
-                url: item.html_url,
-                type: item.type,
-                dueDate: item.due_at
-              }))
-          })).filter(module => module.assignments.length > 0);
+
+          if (assignmentResponse.ok) {
+            const assignments = await assignmentResponse.json();
+            courseAssignments = assignments.map(assignment => ({
+              id: assignment.id,
+              title: assignment.name || 'Untitled',
+              url: assignment.html_url,
+              type: 'Assignment',
+              dueDate: assignment.due_at
+            }));
+          }
 
           return {
             id: course.id,
             name: course.name,
-            modules: processedModules
+            modules: processedModules,
+            assignments: courseAssignments
           };
           
         } catch (error) {
@@ -367,7 +392,10 @@ class CanvasDashboard {
       });
 
       const results = await Promise.all(coursePromises);
-      const validCourses = results.filter(course => course && course.modules.length > 0);
+      const validCourses = results.filter(course => course !== null);
+      
+      // Sort courses alphabetically
+      validCourses.sort((a, b) => a.name.localeCompare(b.name));
       
       this.studentData = { courses: validCourses };
       console.log('Final student data:', this.studentData);
@@ -453,21 +481,38 @@ class CanvasDashboard {
       <div class="courses-grid">
         ${this.studentData.courses.map(course => `
           <div class="course-column">
-            <div class="course-column-header">${course.name}</div>
+            <div class="course-column-header">
+              ${course.name}
+            </div>
             <div class="course-modules">
-              ${course.modules.map(module => `
-                <div class="module-card">
-                  <div class="module-card-title">${module.name}</div>
+              ${course.modules && course.modules.length > 0 ? 
+                course.modules.map(module => `
+                  <div class="module-card">
+                    <div class="module-card-title">${module.name}</div>
+                    <div class="module-assignments">
+                      ${module.assignments.map(assignment => `
+                        <div class="assignment-card" onclick="window.open('${assignment.url}', '_blank')">
+                          <div class="assignment-card-title">${assignment.title}</div>
+                          ${assignment.dueDate ? `<div class="assignment-due">Due: ${new Date(assignment.dueDate).toLocaleDateString()}</div>` : ''}
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                `).join('') 
+                : course.assignments && course.assignments.length > 0 ?
+                `<div class="module-card">
+                  <div class="module-card-title">Course Assignments</div>
                   <div class="module-assignments">
-                    ${module.assignments.map(assignment => `
+                    ${course.assignments.map(assignment => `
                       <div class="assignment-card" onclick="window.open('${assignment.url}', '_blank')">
                         <div class="assignment-card-title">${assignment.title}</div>
                         ${assignment.dueDate ? `<div class="assignment-due">Due: ${new Date(assignment.dueDate).toLocaleDateString()}</div>` : ''}
                       </div>
                     `).join('')}
                   </div>
-                </div>
-              `).join('')}
+                </div>`
+                : '<div class="no-content-message">No assignments available</div>'
+              }
             </div>
           </div>
         `).join('')}

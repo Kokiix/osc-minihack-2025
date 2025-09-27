@@ -67,6 +67,8 @@ class CanvasDashboard {
           border-radius: 6px 6px 0 0;
           margin-bottom: 0;
         }
+
+
         
         .module-section {
           padding: 0.75rem;
@@ -154,12 +156,22 @@ class CanvasDashboard {
     let data = {};
     let courseIDs = {};
     await axios.get("/api/v1/courses")
-    .then(function (response) {
+    .then(async function (response) {
         // Pair course name to course id in courseIDs
         for (i in response.data) {
-            courseIDs[response.data[i].name] = response.data[i].id;
+            const courseId = response.data[i].id;
+            const courseName = response.data[i].name;
+            courseIDs[courseName] = courseId;
+            // Get grades for this course
+            try {
+
+    
+            } catch (error) {
+                console.error('Failed to fetch grade for course:', courseName, error);
+                grades[courseName] = 'N/A';
+            }
             // Pair course name to object w course modules/assign
-            data[response.data[i].name] = {};
+            data[courseName] = {};
         }
         console.log("Get course IDs and names");
         
@@ -232,7 +244,10 @@ class CanvasDashboard {
     return courses.map(course => `
       <div class="${columnClass}">
         <div class="class-column">
-          <h2 class="class-header title is-5">${course.name}</h2>
+          <h2 class="class-header title is-5">
+            ${course.name}
+
+          </h2>
           ${this.renderModules(course.modules)}
         </div>
       </div>
