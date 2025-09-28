@@ -2,7 +2,7 @@
 
 Version A             |  Version B
 :-------------------------:|:-------------------------:
-![](./readme/versionA.png)  |  ![](./readme/versionB.png)
+![Version A](./readme/versionA.png)  |  ![Version B](./readme/versionB.png)
 
 ### Project Overview
 
@@ -10,54 +10,30 @@ The current Canvas dashboard often requires multiple clicks to access assignment
 
 ## Our Solution
 
-We developed a new dashboard layout greatly increases the information density of module pages on Canvas.
+We developed a new dashboard layout that greatly increases the information density of module pages on Canvas.
 
 ![image info](./readme/wasted_space.png)
 
 ### Version A:
-Lists assignments and modules directly inside each column.
+Lists assignments and modules within scrollable cells for each class.
 
 Allows independent scrolling per column, so users can browse without losing context.
 
 Automatically wraps to a new row after four columns to maintain readability.
 
-Includes a toggle button on the right side of the screen to switch between the original Canvas UI and our redesigned interface for comparison.
+Includes a toggle button on the right side of the screen to switch to the original Canvas UI.
+(Though this could be added to version B)
 
 ### Version B:
-Lists assignments and modules directly inside each column.
+Cleaner, more space efficient aesthetic, where classes are purely divided into columns.
 
-Easier functionality but less UI desing involved.
-
-## Why This Matters
-
-Students spend hundreds of cumulative hours navigating Canvas each semester. Our redesign focuses on:
-
-Speed - One click to access all content
-Clarity - No more nested menus
-Usability - Familiar layout, but smarter
-
-### Preview
+Collapsable subheadings for each module.
 
 # Setup
-### Version A:
-Clone the repo (or download ZIP) and use the main branch.
+Clone the repo (or download ZIP) and use: 
+**Version A** : `main` branch
+**Version B** : 
 
-Load the extension into Chrome via Developer Mode → Load unpacked.
-
-Open https://canvas.instructure.com/ and sign in to Canvas.
-
-Visit your Canvas dashboard — Use the toggle button (on the right side of the screen) to display the redesigned UI.
-
-### Version B:
-Clone the repo (or download ZIP) and use the main branch.
-
-Switch to the get-data branch.
-
-Load the extension into Chrome via Developer Mode → Load unpacked.
-
-Open https://canvas.instructure.com/ and sign in to Canvas.
-
-Visit your Canvas dashboard — The new UI is automatically displayed.
 
 ## Dependencies
 
