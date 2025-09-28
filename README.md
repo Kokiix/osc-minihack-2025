@@ -1,45 +1,64 @@
 # Canvas All-In-One
 
-![demo](./readme/demo.mp4)
+*A streamlined dashboard for Canvas that brings all your assignments and modules into a single, easy-to-navigate page.*
 
-### Project Overview
+https://github.com/user-attachments/assets/ff5bcf4f-07e9-49e3-943d-af04d912a847
 
-The current Canvas dashboard often requires multiple clicks to access assignments and modules within each course. Our goal was to streamline this workflow by compressing Canvas into 1 page, reducing time and effort spent navigating to essential content.
+## The Problem
 
-![image info](./readme/wasted_space.png)
+The standard Canvas dashboard requires users to navigate through multiple pages to access essential course information like lessons and assignments.
+
+This process can be time-consuming and inefficient, especially for students managing multiple courses. As illustrated below, much of the modules page is not utilized effectively :(
+
+![Wasted space on the default Canvas dashboard](./readme/wasted_space.png)
 
 ## Our Solution
 
-We developed a new dashboard layout that greatly increases the information density of module pages on Canvas.
+"Canvas All-In-One" is a browser extension that redesigns the Canvas dashboard to maximize information density and provide a more intuitive(?) user experience.
 
-Version A             |  Version B
-:-------------------------:|:-------------------------:
-![Version A](./readme/versionA.png)  |  ![Version B](./readme/versionB.png)
+We have developed two distinct versions to cater to different user preferences.
 
-### Version A:
-Lists assignments and modules within scrollable cells for each class.
+### Features
 
-Allows independent scrolling per column, so users can browse without losing context.
+#### Version A: The Cellular Dashboard
 
-Automatically wraps to a new row after four columns to maintain readability.
+Version A organizes each course into its own scrollable column, allowing you to view all your assignments and modules at a glance.
 
-Includes a toggle button on the right side of the screen to switch to the original Canvas UI.
-(Though this could be added to version B)
+![Version A Screenshot](./readme/versionA.png)
+*Version A, with independent scrolling for each course.*
 
-### Version B:
-Cleaner, more space efficient aesthetic, where classes are purely divided into columns.
+*   **Scrollable Course Cells:** Each course's assignments and modules are contained within their own scrollable cell.
+*   **Independent Scrolling:** Browse through one course's content without losing your place in others.
+*   **Responsive Layout:** The layout automatically wraps to a new row after four courses to maintain readability.
+*   **UI Toggle:** A convenient button on the right side allows you to switch back to the original Canvas UI.
+*   **Ideal for more courses**
 
-Collapsable subheadings for each module.
+#### Version B: The Clean & Collapsible View
 
-# Setup
-Clone the repo (or download ZIP) and run: 
+Version B offers a more minimalist aesthetic, with courses neatly organized into columns and modules that can be expanded or collapsed.
 
-**Version A** : `git checkout main`
+![Version B Screenshot](./readme/versionB.png)
+*Version B, featuring a clean, column-based layout with collapsible modules.*
 
-**Version B** : `git checkout versionB`
+*   **Space-Efficient Design:** A cleaner look that dedicates more screen real estate to your content.
+*   **Collapsible Modules:** Expand and collapse subheadings for each module to focus on what's important.
+*   **Ideal for 5 or less courses** (Unless you got a really wide screen)
 
-Open the page [chrome://extensions](chrome://extensions) and toggle **developer mode** in the upper right.
+## Setup
 
-Begin to **load an unpacked extension** from the upper left and select the all-in-one project.
+1.  **Download the Extension:**
+    *   Clone this repository: `git clone https://github.com/your-username/canvas-all-in-one.git`
+    *   Or, download the ZIP and extract it.
 
-Navigate to [https://ufl.instructure.com/](https://ufl.instructure.com/) and log in if necessary.
+2.  **Select Your Preferred Version:**
+    *   For **Version A**, stay on the `main` branch: `git checkout main`
+    *   For **Version B**, switch to the `versionB` branch: `git checkout versionB`
+
+3.  **Install in Chrome:**
+    *   Open the Chrome extensions page by navigating to [chrome://extensions](chrome://extensions).
+    *   Enable **Developer mode** in the top-right corner.
+    *   Click the **Load unpacked** button in the top-left corner.
+    *   Select the `osc-minihack-2025` project folder.
+
+4.  **Get Started:**
+    *   Navigate to [https://ufl.instructure.com/](https://ufl.instructure.com/) and log in if prompted. The new dashboard should be active.
