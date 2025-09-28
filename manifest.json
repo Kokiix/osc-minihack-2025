@@ -12,7 +12,7 @@
   
   "content_scripts": [
     {
-      "matches": ["https://ufl.instructure.com/*"],
+      "matches": ["https://ufl.instructure.com/*", "https://ufl.instructure.com/?*"],
       "js": ["axios.js", "main.js"],
       "run_at": "document_end"
     }

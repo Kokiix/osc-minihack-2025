@@ -1,18 +1,20 @@
 # Canvas All-In-One
 
-Version A             |  Version B
-:-------------------------:|:-------------------------:
-![Version A](./readme/versionA.png)  |  ![Version B](./readme/versionB.png)
+![demo](./readme/demo.mp4)
 
 ### Project Overview
 
-The current Canvas dashboard often requires multiple clicks to access assignments and modules within each course. Our goal was to streamline this workflow by reducing time and effort spent navigating to essential content.
+The current Canvas dashboard often requires multiple clicks to access assignments and modules within each course. Our goal was to streamline this workflow by compressing Canvas into 1 page, reducing time and effort spent navigating to essential content.
+
+![image info](./readme/wasted_space.png)
 
 ## Our Solution
 
 We developed a new dashboard layout that greatly increases the information density of module pages on Canvas.
 
-![image info](./readme/wasted_space.png)
+Version A             |  Version B
+:-------------------------:|:-------------------------:
+![Version A](./readme/versionA.png)  |  ![Version B](./readme/versionB.png)
 
 ### Version A:
 Lists assignments and modules within scrollable cells for each class.
@@ -30,15 +32,14 @@ Cleaner, more space efficient aesthetic, where classes are purely divided into c
 Collapsable subheadings for each module.
 
 # Setup
-Clone the repo (or download ZIP) and use: 
-**Version A** : `main` branch
-**Version B** : 
+Clone the repo (or download ZIP) and run: 
 
+**Version A** : `git checkout main`
 
-## Dependencies
+**Version B** : `git checkout versionB`
 
-Chrome Extension (Injected into Canvas pages)
+Open the page [chrome://extensions](chrome://extensions) and toggle **developer mode** in the upper right.
 
-HTML / CSS / JavaScript
+Begin to **load an unpacked extension** from the upper left and select the all-in-one project.
 
-Axios for API Fetching (Canvas REST API)
+Navigate to [https://ufl.instructure.com/](https://ufl.instructure.com/) and log in if necessary.
