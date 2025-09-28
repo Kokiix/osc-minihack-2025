@@ -1,6 +1,8 @@
 # Canvas All-In-One
 
-![image info](./readme/versionA.png)
+Version A             |  Version B
+:-------------------------:|:-------------------------:
+![](./readme/versionA.png)  |  ![](./readme/versionB.png)
 
 ### Project Overview
 
