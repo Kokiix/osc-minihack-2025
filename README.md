@@ -1,6 +1,6 @@
 # Canvas All-In-One
 
-![demo](./readme/demo.mp4)
+https://github.com/user-attachments/assets/ff5bcf4f-07e9-49e3-943d-af04d912a847
 
 ### Project Overview
 
@@ -41,5 +41,6 @@ Clone the repo (or download ZIP) and run:
 Open the page [chrome://extensions](chrome://extensions) and toggle **developer mode** in the upper right.
 
 Begin to **load an unpacked extension** from the upper left and select the all-in-one project.
+
 
 Navigate to [https://ufl.instructure.com/](https://ufl.instructure.com/) and log in if necessary.
