@@ -1,13 +1,16 @@
 # Canvas All-In-One
+
+![image info](./readme/versionA.png)
+
 ### Project Overview
 
 The current Canvas dashboard often requires multiple clicks to access assignments and modules within each course. Our goal was to streamline this workflow by reducing time and effort spent navigating to essential content.
 
 ## Our Solution
 
-We developed a new dashboard layout that:
+We developed a new dashboard layout greatly increases the information density of module pages on Canvas.
 
-Displays each course as its own column.
+![image info](./readme/wasted_space.png)
 
 ### Version A:
 Lists assignments and modules directly inside each column.
